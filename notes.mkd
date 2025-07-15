@@ -1,0 +1,7 @@
+Biggest issues:
+
+Scenarios for working:
+
+- Not returning from breaks on time
+- Not folling the standard process for manufacturing
+- Attendance Issues (arriving late)
