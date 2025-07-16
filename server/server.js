@@ -1,10 +1,13 @@
 import OpenAPI from "openai";
 import express from "express";
-
+import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
+app.use(cors());
+app.use(express.json());
+
 const openai = new OpenAPI({
   apiKey: process.env.OPENAI_API_KEY,
 });
@@ -13,13 +16,17 @@ const port = process.env.PORT;
 
 let message_history = [];
 
-app.get("/coaching_api", async (req, res) => {
-  const message = req.body;
-  console.log("Here is the request message:", message);
+app.post("/api", async (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  const message = req.body.coachMessage;
 
+  console.log("Here is the request message:", message);
   const gptResponse = await sendMesage(message);
-  console.log("Here is your response", gptResponse);
-  res.json({ response: gptResponse || "No response generated from ChatGPT" });
+  console.log("Here is gptResponse", gptResponse);
+  console.log("Response: ", gptResponse.output_text);
+  res.json({
+    response: gptResponse.output_text || "No response generated from ChatGPT",
+  });
 });
 
 app.listen(port, () => {
