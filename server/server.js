@@ -14,19 +14,23 @@ const openai = new OpenAPI({
 
 const port = process.env.PORT;
 
-let message_history = [];
-
 app.post("/api", async (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   const message = req.body.coachMessage;
 
-  console.log("Here is the request message:", message);
-  const gptResponse = await sendMesage(message);
-  console.log("Here is gptResponse", gptResponse);
-  console.log("Response: ", gptResponse.output_text);
-  res.json({
-    response: gptResponse.output_text || "No response generated from ChatGPT",
-  });
+  // console.log("Here is the request message:", message);
+  // const gptResponse = await sendMesage(message.message);
+  // console.log("Here is gptResponse", gptResponse);
+  // console.log("Response: ", gptResponse.output_text);
+
+  const response = {
+    sender: "direct report",
+    message:
+      // gptResponse.output_text ||
+      "No response generated from ChatGPT",
+  };
+  res.json(response);
+  console.log("Here is the response: ", response);
 });
 
 app.listen(port, () => {
